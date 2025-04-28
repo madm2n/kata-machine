@@ -1,22 +1,21 @@
 export default function bs_list(haystack: number[], needle: number): boolean {
-    let haystack_pointer = haystack;
+    let low = 0;
+    let high = haystack.length;
 
-    while (true) {
-        const middle_idx = Math.floor(haystack_pointer.length / 2);
-        const middle_elem = haystack_pointer[middle_idx];
+    do {
+        const idx = Math.floor(low + (high - low) / 2);
+        const elem = haystack[idx];
 
-        if (middle_elem == needle) {
+        if (elem == needle) {
             return true;
         }
 
-        if (haystack_pointer.length == 1) {
-            return false;
-        }
-
-        if (middle_elem > needle) {
-            haystack_pointer = haystack_pointer.slice(0, middle_idx);
+        if (elem > needle) {
+            high = idx;
         } else {
-            haystack_pointer = haystack_pointer.slice(middle_idx);
+            low = idx + 1;
         }
-    }
+    } while (low < high);
+
+    return false;
 }
