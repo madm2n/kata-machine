@@ -1,18 +1,23 @@
-interface Node<T> {
+type Node<T> = {
     value: T;
-    next: Node<T> | undefined;
-}
+    next?: Node<T>;
+};
 
 export default class Queue<T> {
     public length: number = 0;
-    private head: Node<T> | undefined;
-    private tail: Node<T> | undefined;
+    private head?: Node<T>;
+    private tail?: Node<T>;
+
+    constructor() {
+        this.length = 0;
+    }
 
     enqueue(item: T): void {
         const node: Node<T> = {
             value: item,
-            next: undefined,
         };
+
+        ++this.length;
 
         if (!this.tail) {
             this.head = node;
@@ -21,22 +26,23 @@ export default class Queue<T> {
             this.tail.next = node;
             this.tail = node;
         }
-
-        ++this.length;
     }
     deque(): T | undefined {
-        const value = this.head?.value;
-
-        if (this.head == this.tail) {
-            this.head = undefined;
-            this.tail = undefined;
-            this.length = 0;
-        } else {
-            this.head = this.head?.next;
-            --this.length;
+        if (!this.head) {
+            return undefined;
         }
 
-        return value;
+        --this.length;
+
+        const head = this.head;
+        this.head = this.head.next;
+        head.next = undefined;
+
+        if (this.length === 0) {
+            this.tail = undefined;
+        }
+
+        return head.value;
     }
     peek(): T | undefined {
         return this.head?.value;
