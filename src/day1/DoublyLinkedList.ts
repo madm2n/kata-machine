@@ -80,7 +80,48 @@ export default class DoublyLinkedList<T> {
         this.tail = node;
     }
     remove(item: T): T | undefined {
-        return undefined;
+        let curr: Node<T> | undefined = this.head;
+        let node: Node<T> | undefined;
+
+        for (let i = 0; i < this.length; i++) {
+            if (curr?.value === item) {
+                node = curr;
+                break;
+            }
+
+            curr = curr?.next;
+        }
+
+        if (!node) {
+            return undefined;
+        }
+
+        this.length--;
+
+        if (this.length === 0) {
+            const value = this.head?.value;
+            this.head = this.tail = undefined;
+            return value;
+        }
+
+        if (node.prev) {
+            node.prev.next = node.next;
+        }
+
+        if (node.next) {
+            node.next.prev = node.prev;
+        }
+
+        if (node === this.head) {
+            this.head = node.next;
+        }
+
+        if (node === this.tail) {
+            this.tail = node.prev;
+        }
+
+        node.next = node.prev = undefined;
+        return node.value;
     }
     get(idx: number): T | undefined {
         return undefined;
