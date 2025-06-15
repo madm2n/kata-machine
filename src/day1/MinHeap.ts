@@ -43,27 +43,18 @@ export default class MinHeap {
     }
 
     private heapifyDown(idx: number): void {
-        if (idx >= this.length) {
-            return;
-        }
-
         const leftIdx = this.leftChild(idx);
 
-        if (leftIdx >= this.length) {
+        if (idx >= this.length || leftIdx >= this.length) {
             return;
         }
 
         const rightIdx = this.rightChild(idx);
-        let rightValue: number | null = null;
-
-        if (rightIdx < this.length) {
-            rightValue = this.data[rightIdx];
-        }
-
+        const rightValue: number = this.data[rightIdx];
         const leftValue = this.data[leftIdx];
         const currValue = this.data[idx];
 
-        if (rightValue == null || leftValue < rightValue) {
+        if (leftValue < rightValue) {
             this.data[idx] = leftValue;
             this.data[leftIdx] = currValue;
             this.heapifyDown(leftIdx);
