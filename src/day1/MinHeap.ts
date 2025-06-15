@@ -3,9 +3,9 @@ export default class MinHeap {
     private data: number[] = [];
 
     public insert(value: number): void {
-        this.length++;
         this.data.push(value);
-        this.heapifyUp(this.length - 1);
+        this.heapifyUp(this.length);
+        this.length++;
     }
 
     public delete(): number {
