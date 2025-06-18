@@ -8,14 +8,11 @@ export default function bfs(
 
     const prev = new Array(graph.length).fill(-1);
     const queue: number[] = [source];
-    let curr: number = -1;
-    let found: boolean = false;
 
     do {
-        curr = queue.pop() as number;
+        const curr = queue.pop() as number;
 
         if (curr === needle) {
-            found = true;
             break;
         }
 
@@ -38,16 +35,17 @@ export default function bfs(
         }
     } while (queue.length > 0);
 
-    if (!found) {
-        return null;
-    }
-
     const path: number[] = [];
+    let pathCurr = prev[needle];
 
-    while (curr != -1) {
-        path.unshift(curr);
-        curr = prev[curr];
+    while (pathCurr != -1) {
+        path.unshift(pathCurr);
+        pathCurr = prev[pathCurr];
     }
 
-    return path;
+    if (path.length > 0) {
+        return [...path, needle];
+    }
+
+    return null;
 }
