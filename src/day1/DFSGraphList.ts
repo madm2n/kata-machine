@@ -17,7 +17,6 @@ function walk(
         return true;
     }
 
-
     // recurse
     const list = graph[curr];
 
